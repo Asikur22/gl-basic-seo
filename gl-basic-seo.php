@@ -9,7 +9,7 @@ Stable tag: 1.0
 Author: Asiqur Rahman
 Author URI: https://www.asique.net/
 License: GPLv2
-Text Domain: basic_seo
+Text Domain: glbs
 */
 
 require_once plugin_dir_path( __FILE__ ) . 'helper.php';
@@ -17,12 +17,12 @@ include_once plugin_dir_path( __FILE__ ) . 'taxonomy-meta-box.php';
 
 function basic_seo_add_meta_box_wrap() {
 	function basic_seo_add_meta_box() {
-//		$post_types = array( 'post', 'page', 'product' );
+		// $post_types = array( 'post', 'page', 'product' );
 		$post_types = get_post_types( '', 'names' );
 		
 		add_meta_box(
 			'basic_seo_metabox',
-			__( 'Basic SEO', 'basic_seo' ),
+			__( 'Basic SEO', 'glbs' ),
 			'basic_seo_html',
 			$post_types,
 			'normal',
@@ -39,18 +39,18 @@ function basic_seo_html( $post ) {
 	wp_nonce_field( '_basic_seo_nonce', 'basic_seo_nonce' ); ?>
 	
 	<p>
-		<label for="basic_seo_seo_title"><?php _e( 'SEO Title', 'basic_seo' ); ?></label><br>
-		<input class="large-text" type="text" name="basic_seo_seo_title" id="basic_seo_seo_title" value="<?php echo basic_seo_get_meta( 'basic_seo_seo_title' ); ?>"><br>
+		<label for="glbs_title"><?php _e( 'SEO Title', 'glbs' ); ?></label><br>
+		<input class="large-text" type="text" name="glbs_title" id="glbs_title" value="<?php echo basic_seo_get_meta( 'glbs_title' ); ?>"><br>
 		<small>Leave empty to use default title</small>
 	</p>
 	<p>
-		<label for="basic_seo_seo_keywords"><?php _e( 'SEO Keywords', 'basic_seo' ); ?></label><br>
-		<input class="large-text" type="text" name="basic_seo_seo_keywords" id="basic_seo_seo_keywords" value="<?php echo basic_seo_get_meta( 'basic_seo_seo_keywords' ); ?>"><br>
+		<label for="glbs_keywords"><?php _e( 'SEO Keywords', 'glbs' ); ?></label><br>
+		<input class="large-text" type="text" name="glbs_keywords" id="glbs_keywords" value="<?php echo basic_seo_get_meta( 'glbs_keywords' ); ?>"><br>
 		<small>Enter the list of keywords separated by comma</small>
 	</p>
 	<p>
-		<label for="basic_seo_seo_description"><?php _e( 'SEO Description', 'basic_seo' ); ?></label><br>
-		<textarea class="large-text" name="basic_seo_seo_description" id="basic_seo_seo_description" rows="5"><?php echo basic_seo_get_meta( 'basic_seo_seo_description' ); ?></textarea><br>
+		<label for="glbs_description"><?php _e( 'SEO Description', 'glbs' ); ?></label><br>
+		<textarea class="large-text" name="glbs_description" id="glbs_description" rows="5"><?php echo basic_seo_get_meta( 'glbs_description' ); ?></textarea><br>
 		<small>Enter meta description for this page</small>
 	</p>
 	<?php
@@ -67,14 +67,14 @@ function basic_seo_save( $post_id ) {
 		return;
 	}
 	
-	if ( isset( $_POST['basic_seo_seo_title'] ) ) {
-		update_post_meta( $post_id, 'basic_seo_seo_title', esc_attr( $_POST['basic_seo_seo_title'] ) );
+	if ( isset( $_POST['glbs_title'] ) ) {
+		update_post_meta( $post_id, 'glbs_title', esc_attr( $_POST['glbs_title'] ) );
 	}
-	if ( isset( $_POST['basic_seo_seo_keywords'] ) ) {
-		update_post_meta( $post_id, 'basic_seo_seo_keywords', esc_attr( $_POST['basic_seo_seo_keywords'] ) );
+	if ( isset( $_POST['glbs_keywords'] ) ) {
+		update_post_meta( $post_id, 'glbs_keywords', esc_attr( $_POST['glbs_keywords'] ) );
 	}
-	if ( isset( $_POST['basic_seo_seo_description'] ) ) {
-		update_post_meta( $post_id, 'basic_seo_seo_description', esc_attr( $_POST['basic_seo_seo_description'] ) );
+	if ( isset( $_POST['glbs_description'] ) ) {
+		update_post_meta( $post_id, 'glbs_description', esc_attr( $_POST['glbs_description'] ) );
 	}
 }
 
@@ -84,7 +84,7 @@ function basic_seo_set_title( $title ) {
 	global $post;
 	if ( isset( $post ) ) {
 		$id        = $post->ID;
-		$seo_title = get_post_meta( $id, 'basic_seo_seo_title', true );
+		$seo_title = get_post_meta( $id, 'glbs_title', true );
 		
 		if ( ! empty( $seo_title ) ) {
 			$title = $seo_title;
@@ -102,10 +102,10 @@ add_filter( 'wp_title', 'basic_seo_set_title' );
  */
 function basic_seo_rendar_meta() {
 	global $post;
-	if ( isset( $post ) && ! basic_seo_is_tax() ) {
+	if ( isset( $post ) && ! glbs_is_tax() ) {
 		$id      = $post->ID;
-		$keyword = get_post_meta( $id, 'basic_seo_seo_keywords', true );
-		$desc    = get_post_meta( $id, 'basic_seo_seo_description', true );
+		$keyword = get_post_meta( $id, 'glbs_keywords', true );
+		$desc    = get_post_meta( $id, 'glbs_description', true );
 		?>
 		<?php if ( ! empty( $keyword ) ) : ?>
 			<!-- Basic SEO Keywords-->

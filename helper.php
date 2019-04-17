@@ -11,7 +11,7 @@ function basic_seo_get_meta( $value ) {
 	}
 }
 
-function basic_seo_is_tax() {
+function glbs_is_tax() {
 	return is_tax() || is_category() || is_tag() || is_archive() ? true : false;
 }
 
