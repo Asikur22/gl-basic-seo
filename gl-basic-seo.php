@@ -12,16 +12,8 @@ License: GPLv2
 Text Domain: basic_seo
 */
 
-function basic_seo_get_meta( $value ) {
-	global $post;
-	
-	$field = get_post_meta( $post->ID, $value, true );
-	if ( ! empty( $field ) ) {
-		return is_array( $field ) ? stripslashes_deep( $field ) : stripslashes( wp_kses_decode_entities( $field ) );
-	} else {
-		return false;
-	}
-}
+require_once plugin_dir_path( __FILE__ ) . 'helper.php';
+include_once plugin_dir_path( __FILE__ ) . 'taxonomy-meta-box.php';
 
 function basic_seo_add_meta_box() {
 	$post_types = array( 'post', 'page', 'product' );
@@ -98,7 +90,11 @@ function basic_seo_set_title( $title ) {
 }
 
 add_filter( 'pre_get_document_title', 'basic_seo_set_title' );
+add_filter( 'wp_title', 'basic_seo_set_title' );
 
+/*
+ * Render Meta tag in document head
+ */
 function basic_seo_rendar_meta() {
 	global $post;
 	if ( isset( $post ) ) {
@@ -108,11 +104,11 @@ function basic_seo_rendar_meta() {
 		?>
 		<?php if ( ! empty( $keyword ) ) : ?>
 			<!-- Basic SEO Keywords-->
-			<meta name="keywords" content="<?php echo $keyword; ?>"/>
+			<meta name="keywords" content="<?php echo $keyword; ?>">
 		<?php endif; ?>
 		<?php if ( ! empty( $desc ) ) : ?>
 			<!-- Basic SEO Description-->
-			<meta name="description" content="<?php echo $desc; ?>"/>
+			<meta name="description" content="<?php echo $desc; ?>">
 		<?php endif; ?>
 		<?php
 	}
