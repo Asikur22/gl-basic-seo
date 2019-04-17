@@ -9,13 +9,25 @@ Stable tag: 1.0
 Author: Asiqur Rahman
 Author URI: https://www.asique.net/
 License: GPLv2
+Text Domain: basic_seo
 */
+
+function basic_seo_get_meta( $value ) {
+	global $post;
+	
+	$field = get_post_meta( $post->ID, $value, true );
+	if ( ! empty( $field ) ) {
+		return is_array( $field ) ? stripslashes_deep( $field ) : stripslashes( wp_kses_decode_entities( $field ) );
+	} else {
+		return false;
+	}
+}
 
 function basic_seo_add_meta_box() {
 	$post_types = array( 'post', 'page', 'product' );
 	
 	add_meta_box(
-		'basic_seo-basic-seo',
+		'basic_seo_metabox',
 		__( 'Basic SEO', 'basic_seo' ),
 		'basic_seo_html',
 		$post_types,
@@ -31,15 +43,18 @@ function basic_seo_html( $post ) {
 	
 	<p>
 		<label for="basic_seo_seo_title"><?php _e( 'SEO Title', 'basic_seo' ); ?></label><br>
-		<input class="large-text" type="text" name="basic_seo_seo_title" id="basic_seo_seo_title" value="<?php echo basic_seo_get_meta( 'basic_seo_seo_title' ); ?>">
+		<input class="large-text" type="text" name="basic_seo_seo_title" id="basic_seo_seo_title" value="<?php echo basic_seo_get_meta( 'basic_seo_seo_title' ); ?>"><br>
+		<small>Leave empty to use default title</small>
 	</p>
 	<p>
 		<label for="basic_seo_seo_keywords"><?php _e( 'SEO Keywords', 'basic_seo' ); ?></label><br>
-		<input class="large-text" type="text" name="basic_seo_seo_keywords" id="basic_seo_seo_keywords" value="<?php echo basic_seo_get_meta( 'basic_seo_seo_keywords' ); ?>">
+		<input class="large-text" type="text" name="basic_seo_seo_keywords" id="basic_seo_seo_keywords" value="<?php echo basic_seo_get_meta( 'basic_seo_seo_keywords' ); ?>"><br>
+		<small>Enter the list of keywords separated by comma</small>
 	</p>
 	<p>
 		<label for="basic_seo_seo_description"><?php _e( 'SEO Description', 'basic_seo' ); ?></label><br>
-		<textarea class="large-text" name="basic_seo_seo_description" id="basic_seo_seo_description" rows="5"><?php echo basic_seo_get_meta( 'basic_seo_seo_description' ); ?></textarea>
+		<textarea class="large-text" name="basic_seo_seo_description" id="basic_seo_seo_description" rows="5"><?php echo basic_seo_get_meta( 'basic_seo_seo_description' ); ?></textarea><br>
+		<small>Enter meta description for this page</small>
 	</p>
 	<?php
 }
