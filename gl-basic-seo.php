@@ -63,9 +63,6 @@ function basic_seo_save( $post_id ) {
 	if ( ! isset( $_POST['basic_seo_nonce'] ) || ! wp_verify_nonce( $_POST['basic_seo_nonce'], '_basic_seo_nonce' ) ) {
 		return;
 	}
-	if ( ! current_user_can( 'edit_post', $post_id ) ) {
-		return;
-	}
 	
 	if ( isset( $_POST['glbs_title'] ) ) {
 		update_post_meta( $post_id, 'glbs_title', esc_attr( $_POST['glbs_title'] ) );

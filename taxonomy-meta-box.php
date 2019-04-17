@@ -83,9 +83,6 @@ function glbs_save_extra_tax_fileds( $term_id ) {
 	if ( ! isset( $_POST['glbs_nonce_tax'] ) || ! wp_verify_nonce( $_POST['glbs_nonce_tax'], '_glbs_nonce_tax' ) ) {
 		return;
 	}
-	if ( ! current_user_can( 'edit_post', $term_id ) ) {
-		return;
-	}
 	
 	if ( isset( $_POST['basic_seo_title'] ) ) {
 		update_term_meta( $term_id, 'basic_seo_title', esc_attr( $_POST['basic_seo_title'] ) );
@@ -131,11 +128,11 @@ function glbs_tax_seo_meta() {
 		?>
 		<?php if ( ! empty( $keyword ) ) : ?>
 			<!-- Basic SEO Keywords-->
-			<meta name="keywords" content="<?php echo $keyword; ?>"/>
+			<meta name="keywords" content="<?php echo $keyword; ?>">
 		<?php endif; ?>
 		<?php if ( ! empty( $desc ) ) : ?>
 			<!-- Basic SEO Description-->
-			<meta name="description" content="<?php echo $desc; ?>"/>
+			<meta name="description" content="<?php echo $desc; ?>">
 		<?php endif; ?>
 		<?php
 	}
