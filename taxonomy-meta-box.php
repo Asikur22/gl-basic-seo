@@ -63,13 +63,19 @@ function basic_seo_extra_category_fields( $term ) {    //check for existing feat
 	<?php
 }
 
-$wptm_taxonomies = get_taxonomies( '', 'names' );
-if ( is_array( $wptm_taxonomies ) ) {
-	foreach ( $wptm_taxonomies as $wptm_taxonomy ) {
-		add_action( $wptm_taxonomy . '_add_form_fields', 'basic_seo_extra_category_fields' );
-		add_action( $wptm_taxonomy . '_edit_form', 'basic_seo_edit_extra_category_fields' );
+function basic_seo_all_tax() {
+	
+	$glbs_taxonomies = get_taxonomies( '', 'names' );
+	if ( is_array( $glbs_taxonomies ) ) {
+		foreach ( $glbs_taxonomies as $glbs_taxonomy ) {
+			add_action( $glbs_taxonomy . '_add_form_fields', 'basic_seo_extra_category_fields' );
+			add_action( $glbs_taxonomy . '_edit_form', 'basic_seo_edit_extra_category_fields' );
+		}
 	}
 }
+
+add_action( 'init', 'basic_seo_all_tax', 99 );
+
 
 /*
  * save extra taxonomy extra fields

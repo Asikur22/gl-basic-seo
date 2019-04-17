@@ -97,7 +97,7 @@ add_filter( 'wp_title', 'basic_seo_set_title' );
  */
 function basic_seo_rendar_meta() {
 	global $post;
-	if ( isset( $post ) ) {
+	if ( isset( $post ) && ! basic_seo_is_tax() ) {
 		$id      = $post->ID;
 		$keyword = get_post_meta( $id, 'basic_seo_seo_keywords', true );
 		$desc    = get_post_meta( $id, 'basic_seo_seo_description', true );
