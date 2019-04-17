@@ -64,7 +64,6 @@ function basic_seo_extra_category_fields( $term ) {    //check for existing feat
 }
 
 function basic_seo_all_tax() {
-	
 	$glbs_taxonomies = get_taxonomies( '', 'names' );
 	if ( is_array( $glbs_taxonomies ) ) {
 		foreach ( $glbs_taxonomies as $glbs_taxonomy ) {

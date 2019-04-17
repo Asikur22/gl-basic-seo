@@ -15,20 +15,25 @@ Text Domain: basic_seo
 require_once plugin_dir_path( __FILE__ ) . 'helper.php';
 include_once plugin_dir_path( __FILE__ ) . 'taxonomy-meta-box.php';
 
-function basic_seo_add_meta_box() {
-	$post_types = array( 'post', 'page', 'product' );
+function basic_seo_add_meta_box_wrap() {
+	function basic_seo_add_meta_box() {
+//		$post_types = array( 'post', 'page', 'product' );
+		$post_types = get_post_types( '', 'names' );
+		
+		add_meta_box(
+			'basic_seo_metabox',
+			__( 'Basic SEO', 'basic_seo' ),
+			'basic_seo_html',
+			$post_types,
+			'normal',
+			'high'
+		);
+	}
 	
-	add_meta_box(
-		'basic_seo_metabox',
-		__( 'Basic SEO', 'basic_seo' ),
-		'basic_seo_html',
-		$post_types,
-		'normal',
-		'high'
-	);
+	add_action( 'add_meta_boxes', 'basic_seo_add_meta_box' );
 }
 
-add_action( 'add_meta_boxes', 'basic_seo_add_meta_box' );
+add_action( 'init', 'basic_seo_add_meta_box_wrap', 99 );
 
 function basic_seo_html( $post ) {
 	wp_nonce_field( '_basic_seo_nonce', 'basic_seo_nonce' ); ?>
